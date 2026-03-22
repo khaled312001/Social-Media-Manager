@@ -1,0 +1,17 @@
+export enum FunnelStage {
+  LEAD = 'LEAD',
+  PROSPECT = 'PROSPECT',
+  QUALIFIED = 'QUALIFIED',
+  OPPORTUNITY = 'OPPORTUNITY',
+  CUSTOMER = 'CUSTOMER',
+  CHURNED = 'CHURNED',
+}
+
+export enum ContactSource {
+  SOCIAL_MEDIA = 'SOCIAL_MEDIA',
+  EMAIL_CAMPAIGN = 'EMAIL_CAMPAIGN',
+  WEBSITE = 'WEBSITE',
+  MANUAL = 'MANUAL',
+  API = 'API',
+  IMPORT = 'IMPORT',
+}

@@ -1,0 +1,18 @@
+export enum PostStatus {
+  DRAFT = 'DRAFT',
+  PENDING_APPROVAL = 'PENDING_APPROVAL',
+  SCHEDULED = 'SCHEDULED',
+  PUBLISHING = 'PUBLISHING',
+  PUBLISHED = 'PUBLISHED',
+  FAILED = 'FAILED',
+  CANCELLED = 'CANCELLED',
+}
+
+export enum MediaType {
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO',
+  CAROUSEL = 'CAROUSEL',
+  REEL = 'REEL',
+  STORY = 'STORY',
+  TEXT = 'TEXT',
+}

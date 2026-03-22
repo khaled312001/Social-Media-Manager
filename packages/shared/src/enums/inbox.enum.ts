@@ -1,0 +1,22 @@
+export enum MessageType {
+  DIRECT_MESSAGE = 'DIRECT_MESSAGE',
+  COMMENT = 'COMMENT',
+  MENTION = 'MENTION',
+  REVIEW = 'REVIEW',
+  STORY_REPLY = 'STORY_REPLY',
+}
+
+export enum Sentiment {
+  POSITIVE = 'POSITIVE',
+  NEUTRAL = 'NEUTRAL',
+  NEGATIVE = 'NEGATIVE',
+}
+
+export enum InboxStatus {
+  UNREAD = 'UNREAD',
+  READ = 'READ',
+  ASSIGNED = 'ASSIGNED',
+  RESOLVED = 'RESOLVED',
+  SNOOZED = 'SNOOZED',
+  SPAM = 'SPAM',
+}
