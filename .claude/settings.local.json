@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/\")",
+      "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/settings/\")",
+      "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/posts/\")",
+      "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/inbox/\")",
+      "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/analytics/\")",
+      "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/ai/\")",
+      "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/campaigns/\")",
+      "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/settings/accounts/\")",
+      "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/settings/billing/\")",
+      "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/automation/\")",
+      "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/team/\")",
+      "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/settings/api-keys/\")",
+      "Bash(find \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)\" -name \"page.tsx\")"
+    ]
+  }
+}

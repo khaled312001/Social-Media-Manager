@@ -1,0 +1,90 @@
+groups:
+  - name: barmagly-api
+    rules:
+      - alert: HighErrorRate
+        expr: |
+          sum(rate(http_requests_total{status=~"5.."}[5m])) by (job)
+          / sum(rate(http_requests_total[5m])) by (job) > 0.05
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High API error rate ({{ $value | humanizePercentage }})"
+          description: "API error rate is above 5% for more than 2 minutes."
+
+      - alert: HighApiLatency
+        expr: |
+          histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le)) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High API p95 latency ({{ $value }}s)"
+
+      - alert: ApiDown
+        expr: up{job="barmagly-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Barmagly API is down"
+
+  - name: barmagly-queue
+    rules:
+      - alert: HighQueueDepth
+        expr: bullmq_queue_waiting_count > 1000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Queue depth too high: {{ $value }} jobs waiting"
+
+      - alert: FailedJobs
+        expr: increase(bullmq_queue_failed_count[5m]) > 10
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $value }} queue jobs failed in the last 5 minutes"
+
+  - name: barmagly-infra
+    rules:
+      - alert: HighCpuUsage
+        expr: 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 85
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "CPU usage is {{ $value }}% on {{ $labels.instance }}"
+
+      - alert: HighMemoryUsage
+        expr: (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100 > 90
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Memory usage is {{ $value }}% on {{ $labels.instance }}"
+
+      - alert: DiskSpaceLow
+        expr: (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) * 100 < 15
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Disk space below 15% on {{ $labels.instance }}"
+
+      - alert: PostgresDown
+        expr: pg_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "PostgreSQL is down"
+
+      - alert: RedisDown
+        expr: redis_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Redis is down"

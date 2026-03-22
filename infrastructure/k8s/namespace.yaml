@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: barmagly
+  labels:
+    app.kubernetes.io/name: barmagly
+    app.kubernetes.io/managed-by: kubectl
