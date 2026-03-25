@@ -46,7 +46,8 @@
       "Bash(rm -rf .next)",
       "Bash(start /B cmd /C \"pnpm dev --port 3020 > C:/tmp/next3020.log 2>&1\")",
       "Bash(curl -s http://localhost:3020)",
-      "Bash(curl -s \"http://localhost:3020/_next/static/css/app/layout.css\")"
+      "Bash(curl -s \"http://localhost:3020/_next/static/css/app/layout.css\")",
+      "Bash(curl -s http://localhost:3020/dashboard -o /dev/null -w \"HTTP %{http_code}\\\\n\")"
     ]
   }
 }
