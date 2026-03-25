@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const PUBLIC_PATHS = ['/', '/login', '/register', '/forgot-password', '/pricing', '/blog'];
 const AUTH_PATHS = ['/login', '/register', '/forgot-password'];
 
 export function middleware(request: NextRequest) {
@@ -14,12 +13,11 @@ export function middleware(request: NextRequest) {
   }
 
   // If visiting protected dashboard without token — redirect to login
-  // DEMO MODE: comment out to bypass auth
-  // if (!token && pathname.startsWith('/dashboard')) {
-  //   const url = new URL('/login', request.url);
-  //   url.searchParams.set('from', pathname);
-  //   return NextResponse.redirect(url);
-  // }
+  if (!token && pathname.startsWith('/dashboard')) {
+    const url = new URL('/login', request.url);
+    url.searchParams.set('from', pathname);
+    return NextResponse.redirect(url);
+  }
 
   return NextResponse.next();
 }

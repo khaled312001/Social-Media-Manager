@@ -25,7 +25,7 @@ export default function CrmPage() {
   const [view, setView] = useState<'table' | 'pipeline'>('table');
 
   useEffect(() => {
-    (crmApi as any).listContacts({ page: 1, limit: 50 })
+    crmApi.list({ page: 1, limit: 50 })
       .then((res: any) => {
         const data = res?.data ?? res;
         setContacts(data?.items ?? data ?? []);

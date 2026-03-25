@@ -36,7 +36,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     Promise.all([
-      analyticsApi.getOverview({ period: '30d' }).catch(() => null),
+      analyticsApi.overview({ period: '30d' }).catch(() => null),
       postsApi.list({ limit: 5, status: 'PUBLISHED' }).catch(() => null),
     ]).then(([ov, posts]) => {
       setOverview((ov as any)?.data ?? ov);

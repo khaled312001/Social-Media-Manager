@@ -2,25 +2,25 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast } from 'sonner';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
 
 const schema = z.object({
   email: z.string().email('Enter a valid email'),
   password: z.string().min(1, 'Password is required'),
-  totpCode: z.string().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
 
 export default function LoginPage() {
-  const { login, isLoading } = useAuth();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
-  const [needs2FA, setNeeds2FA] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -29,16 +29,28 @@ export default function LoginPage() {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = async (data: FormData) => {
+    setIsLoading(true);
     try {
-      await login(data.email, data.password, data.totpCode);
-    } catch (err: any) {
-      const msg = err?.response?.data?.message ?? err?.message ?? 'Login failed';
-      if (msg.toLowerCase().includes('2fa') || msg.toLowerCase().includes('totp')) {
-        setNeeds2FA(true);
-        toast.info('Enter your 6-digit authenticator code');
-      } else {
-        toast.error(msg);
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: data.email, password: data.password }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        toast.error(err.message ?? 'Invalid credentials');
+        return;
       }
+
+      toast.success('Welcome back!');
+      const from = searchParams.get('from') ?? '/dashboard';
+      router.push(from);
+      router.refresh();
+    } catch {
+      toast.error('Something went wrong. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -49,6 +61,13 @@ export default function LoginPage() {
         <p className="text-sm text-muted-foreground">
           Sign in to your Barmagly account
         </p>
+      </div>
+
+      {/* Demo credentials hint */}
+      <div className="rounded-lg border border-border bg-muted/40 px-4 py-3 text-sm space-y-1">
+        <p className="font-medium text-foreground">Admin credentials:</p>
+        <p className="text-muted-foreground font-mono">admin@barmagly.com</p>
+        <p className="text-muted-foreground font-mono">Admin@123456</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -66,12 +85,7 @@ export default function LoginPage() {
         </div>
 
         <div className="space-y-1">
-          <div className="flex items-center justify-between">
-            <label className="text-sm font-medium" htmlFor="password">Password</label>
-            <Link href="/forgot-password" className="text-xs text-primary hover:underline">
-              Forgot password?
-            </Link>
-          </div>
+          <label className="text-sm font-medium" htmlFor="password">Password</label>
           <div className="relative">
             <input
               id="password"
@@ -92,23 +106,6 @@ export default function LoginPage() {
           {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
         </div>
 
-        {needs2FA && (
-          <div className="space-y-1">
-            <label className="text-sm font-medium" htmlFor="totpCode">
-              Authenticator Code
-            </label>
-            <input
-              id="totpCode"
-              type="text"
-              inputMode="numeric"
-              maxLength={6}
-              placeholder="000000"
-              className="input w-full tracking-widest text-center text-lg"
-              {...register('totpCode')}
-            />
-          </div>
-        )}
-
         <button
           type="submit"
           disabled={isLoading}
@@ -118,13 +115,6 @@ export default function LoginPage() {
           Sign in
         </button>
       </form>
-
-      <p className="text-sm text-center text-muted-foreground">
-        Don&apos;t have an account?{' '}
-        <Link href="/register" className="text-primary font-medium hover:underline">
-          Create one free
-        </Link>
-      </p>
     </div>
   );
 }

@@ -47,7 +47,27 @@
       "Bash(start /B cmd /C \"pnpm dev --port 3020 > C:/tmp/next3020.log 2>&1\")",
       "Bash(curl -s http://localhost:3020)",
       "Bash(curl -s \"http://localhost:3020/_next/static/css/app/layout.css\")",
-      "Bash(curl -s http://localhost:3020/dashboard -o /dev/null -w \"HTTP %{http_code}\\\\n\")"
+      "Bash(curl -s http://localhost:3020/dashboard -o /dev/null -w \"HTTP %{http_code}\\\\n\")",
+      "Bash(curl -s http://localhost:3020/dashboard -o /dev/null -w \"HTTP %{http_code} \\(should be 307 redirect\\)\\\\n\")",
+      "Bash(curl -s http://localhost:3020/login -o /dev/null -w \"HTTP %{http_code} \\(login page\\)\\\\n\")",
+      "Bash(curl -s -X POST http://localhost:3020/api/auth/login -H \"Content-Type: application/json\" -d '{\"\"email\"\":\"\"admin@barmagly.com\"\",\"\"password\"\":\"\"Admin@123456\"\"}' -w \"\\\\nHTTP %{http_code}\")",
+      "Bash(pg_ctl --version)",
+      "Bash(psql --version)",
+      "Bash(redis-cli --version)",
+      "Read(//c/Program Files/PostgreSQL/**)",
+      "Bash(\"C:/Program Files/PostgreSQL/16/bin/pg_ctl.exe\" start -D \"C:/pgdata\" -l \"C:/pgdata/pg.log\" 2)",
+      "Bash(1 sleep:*)",
+      "Bash(\"C:/Program Files/PostgreSQL/16/bin/psql.exe\" -U postgres -c \"CREATE DATABASE barmagly;\")",
+      "Bash(\"C:/Program Files/PostgreSQL/16/bin/psql.exe\" -U postgres -c \"CREATE USER barmagly_user WITH PASSWORD ''barmagly_pass'';\")",
+      "Bash(\"C:/Program Files/PostgreSQL/16/bin/psql.exe\" -U postgres -c \"GRANT ALL PRIVILEGES ON DATABASE barmagly TO barmagly_user;\")",
+      "Bash(where redis-server:*)",
+      "Bash(/dev/null ls:*)",
+      "Bash(find C:/ProgramData/chocolatey -name redis-server*)",
+      "Bash(head -5 find C:/tools -name redis*)",
+      "Bash(\"f:/Social Media:*)",
+      "Bash(pnpm install:*)",
+      "Bash(npx prisma:*)",
+      "Bash(npx ts-node --project tsconfig.json -e \":*)"
     ]
   }
 }

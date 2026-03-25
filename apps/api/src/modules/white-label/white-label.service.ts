@@ -51,13 +51,13 @@ export class WhiteLabelService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getConfig(workspaceId: string): Promise<WhiteLabelConfig> {
-    let config = await this.prisma.whiteLabelConfig.findUnique({
+    let config = await this.prisma.brandingConfig.findUnique({
       where: { workspaceId },
     });
 
     if (!config) {
       // Auto-create a default config for the workspace
-      config = await this.prisma.whiteLabelConfig.create({
+      config = await this.prisma.brandingConfig.create({
         data: {
           workspaceId,
           domainVerified: false,
@@ -75,7 +75,7 @@ export class WhiteLabelService {
   ): Promise<WhiteLabelConfig> {
     await this.getConfig(workspaceId); // ensure it exists
 
-    return this.prisma.whiteLabelConfig.upsert({
+    return this.prisma.brandingConfig.upsert({
       where: { workspaceId },
       create: {
         workspaceId,
@@ -113,14 +113,14 @@ export class WhiteLabelService {
     }
 
     // Check if domain is already taken by another workspace
-    const existing = await this.prisma.whiteLabelConfig.findFirst({
+    const existing = await this.prisma.brandingConfig.findFirst({
       where: { customDomain: domain, workspaceId: { not: workspaceId } },
     });
     if (existing) {
       throw new BadRequestException('This domain is already in use by another workspace');
     }
 
-    const updated = await this.prisma.whiteLabelConfig.upsert({
+    const updated = await this.prisma.brandingConfig.upsert({
       where: { workspaceId },
       create: {
         workspaceId,
@@ -153,7 +153,7 @@ export class WhiteLabelService {
     this.logger.log(`Verifying domain ${config.customDomain} — expected TXT: ${expectedTxt}`);
 
     // Placeholder: assume verified for now (real impl would use dns.resolveTxt)
-    await this.prisma.whiteLabelConfig.update({
+    await this.prisma.brandingConfig.update({
       where: { workspaceId },
       data: { domainVerified: true },
     });
@@ -162,7 +162,7 @@ export class WhiteLabelService {
   }
 
   async resolveByDomain(domain: string): Promise<WhiteLabelConfig | null> {
-    const config = await this.prisma.whiteLabelConfig.findFirst({
+    const config = await this.prisma.brandingConfig.findFirst({
       where: { customDomain: domain, domainVerified: true },
     });
     return config as WhiteLabelConfig | null;
