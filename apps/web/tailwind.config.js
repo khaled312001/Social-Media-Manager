@@ -1,6 +1,5 @@
-import type { Config } from 'tailwindcss';
-
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   darkMode: ['class'],
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -48,7 +47,6 @@ const config: Config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        // Platform colors
         facebook: '#1877F2',
         instagram: '#E4405F',
         twitter: '#000000',
@@ -83,5 +81,3 @@ const config: Config = {
   },
   plugins: [require('tailwindcss-animate')],
 };
-
-export default config;

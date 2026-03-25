@@ -36,7 +36,17 @@
       "Bash(cat 'f:/Social Media Manager/apps/web/src/app/\\(auth\\)/login/page.tsx')",
       "Bash(ls \"f:/Social Media Manager/apps/web/.env\"*)",
       "Bash(curl -s http://localhost:3000 -o /dev/null -w \"HTTP %{http_code}\")",
-      "Bash(pnpm add:*)"
+      "Bash(pnpm add:*)",
+      "Bash(taskkill /PID 12272 /F)",
+      "Bash(curl -s http://localhost:3010 -o /dev/null -w \"HTTP %{http_code}\\\\n\")",
+      "Bash(curl -s http://localhost:3010/login -o /dev/null -w \"HTTP %{http_code}\\\\n\")",
+      "Bash(ls \"f:/Social Media Manager/apps/web/postcss\"*)",
+      "Bash(ls \"f:/Social Media Manager/apps/web/\"*.config.*)",
+      "Bash(taskkill /PID 5716 /F)",
+      "Bash(rm -rf .next)",
+      "Bash(start /B cmd /C \"pnpm dev --port 3020 > C:/tmp/next3020.log 2>&1\")",
+      "Bash(curl -s http://localhost:3020)",
+      "Bash(curl -s \"http://localhost:3020/_next/static/css/app/layout.css\")"
     ]
   }
 }
