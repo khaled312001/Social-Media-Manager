@@ -14,7 +14,29 @@
       "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/team/\")",
       "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/settings/api-keys/\")",
       "Bash(find \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)\" -name \"page.tsx\")",
-      "Bash(cat \"f:/Social Media Manager/apps/mobile/app/\\(auth\\)/login.tsx\")"
+      "Bash(cat \"f:/Social Media Manager/apps/mobile/app/\\(auth\\)/login.tsx\")",
+      "Bash(node -e \":*)",
+      "Bash(docker compose:*)",
+      "Bash(docker context:*)",
+      "Bash(Start-Process 'C:\\\\Program Files\\\\Docker\\\\Docker\\\\Docker Desktop.exe')",
+      "Bash(powershell -Command \"Start-Process ''''C:\\\\Program Files\\\\Docker\\\\Docker\\\\Docker Desktop.exe''''\")",
+      "Bash(wsl --update)",
+      "Bash(powershell.exe -Command \"wsl --update\")",
+      "Bash(powershell.exe -Command \"wsl --status\")",
+      "Bash(powershell.exe -Command \"Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux\")",
+      "Bash(powershell.exe -Command \":*)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(''''wslEngine:'''', d.get\\(''''wslEngineEnabled''''\\)\\); print\\(''''hyperV:'''', d.get\\(''''hyperVEnabled''''\\)\\)\")",
+      "Bash(/c/Windows/System32/wsl.exe --version)",
+      "Bash(choco install:*)",
+      "Read(//c/ProgramData/chocolatey/lib/redis-64/**)",
+      "Bash(/dev/null find:*)",
+      "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard\")",
+      "Bash(ls 'f:/Social Media Manager/apps/web/src/app/\\(auth\\)/login')",
+      "Bash(cat 'f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/layout.tsx')",
+      "Bash(cat 'f:/Social Media Manager/apps/web/src/app/\\(auth\\)/login/page.tsx')",
+      "Bash(ls \"f:/Social Media Manager/apps/web/.env\"*)",
+      "Bash(curl -s http://localhost:3000 -o /dev/null -w \"HTTP %{http_code}\")",
+      "Bash(pnpm add:*)"
     ]
   }
 }
