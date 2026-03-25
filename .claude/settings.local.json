@@ -13,7 +13,8 @@
       "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/automation/\")",
       "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/team/\")",
       "Bash(ls \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)/dashboard/settings/api-keys/\")",
-      "Bash(find \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)\" -name \"page.tsx\")"
+      "Bash(find \"f:/Social Media Manager/apps/web/src/app/\\(dashboard\\)\" -name \"page.tsx\")",
+      "Bash(cat \"f:/Social Media Manager/apps/mobile/app/\\(auth\\)/login.tsx\")"
     ]
   }
 }

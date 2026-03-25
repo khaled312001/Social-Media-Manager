@@ -79,6 +79,8 @@ export const workspacesApi = {
 export const socialAccountsApi = {
   list: () => api.get('/social-accounts'),
   disconnect: (id: string) => api.delete(`/social-accounts/${id}`),
+  /** Returns { url } — call this then open url in a popup */
+  getOAuthUrl: (platform: string) => api.get('/social-accounts/oauth-url', { params: { platform } } as any),
 };
 
 export const postsApi = {

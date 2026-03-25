@@ -76,6 +76,13 @@ export default function LoginScreen() {
               <Text style={styles.buttonText}>Sign in</Text>
             )}
           </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => router.replace('/(auth)/register')} style={styles.linkRow}>
+            <Text style={styles.linkText}>
+              Don't have an account?{' '}
+              <Text style={styles.linkHighlight}>Sign up free</Text>
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </KeyboardAvoidingView>
@@ -101,4 +108,7 @@ const styles = StyleSheet.create({
   },
   buttonDisabled: { backgroundColor: '#c4b5fd' },
   buttonText: { color: '#fff', fontWeight: '700', fontSize: 16 },
+  linkRow: { alignItems: 'center', marginTop: 8 },
+  linkText: { fontSize: 14, color: '#64748b' },
+  linkHighlight: { color: '#8b5cf6', fontWeight: '600' },
 });

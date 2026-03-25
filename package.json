@@ -10,10 +10,10 @@
     "lint": "turbo run lint",
     "format": "turbo run format",
     "clean": "turbo run clean",
-    "db:migrate": "pnpm --filter api prisma migrate dev",
-    "db:generate": "pnpm --filter api prisma generate",
-    "db:studio": "pnpm --filter api prisma studio",
-    "db:seed": "pnpm --filter api prisma db seed"
+    "db:migrate": "pnpm --filter api run prisma:migrate",
+    "db:generate": "pnpm --filter api run prisma:generate",
+    "db:studio": "pnpm --filter api run prisma:studio",
+    "db:seed": "pnpm --filter api run prisma:seed"
   },
   "devDependencies": {
     "turbo": "^2.3.3",

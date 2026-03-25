@@ -76,7 +76,8 @@ export default function AccountsSettingsPage() {
   const [confirmId, setConfirmId] = useState<string | null>(null);
   const [connectingPlatform, setConnectingPlatform] = useState<string | null>(null);
 
-  useEffect(() => {
+  const loadAccounts = () => {
+    setLoading(true);
     socialAccountsApi
       .list()
       .then((res: any) => {
@@ -85,18 +86,47 @@ export default function AccountsSettingsPage() {
       })
       .catch(() => setAccounts([]))
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    loadAccounts();
+
+    // Listen for OAuth popup callback
+    const onMessage = (e: MessageEvent) => {
+      if (e.origin !== window.location.origin) return;
+      if (e.data?.type !== 'OAUTH_CALLBACK') return;
+      setConnectingPlatform(null);
+      if (e.data.success) {
+        loadAccounts(); // refresh list after successful connection
+      }
+    };
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function handleConnect(platform: string) {
     setConnectingPlatform(platform);
     try {
-      // Build the OAuth URL manually since the API doesn't expose getOAuthUrl
-      const res: any = await fetch(`/api/social-accounts/oauth?platform=${platform}`).then(r => r.json()).catch(() => null);
-      const url = res?.url ?? res?.data?.url;
-      if (url) window.location.href = url;
+      const res: any = await socialAccountsApi.getOAuthUrl(platform);
+      const url = res?.data?.url ?? res?.url;
+      if (!url) { setConnectingPlatform(null); return; }
+
+      // Open OAuth in a small popup so user never leaves the page
+      const popup = window.open(
+        url,
+        `oauth_${platform}`,
+        'width=560,height=680,scrollbars=yes,resizable=yes,toolbar=no,menubar=no',
+      );
+
+      // Poll to detect if popup was closed without completing OAuth
+      const timer = setInterval(() => {
+        if (popup?.closed) {
+          clearInterval(timer);
+          setConnectingPlatform(null);
+        }
+      }, 800);
     } catch {
-      // ignore
-    } finally {
       setConnectingPlatform(null);
     }
   }

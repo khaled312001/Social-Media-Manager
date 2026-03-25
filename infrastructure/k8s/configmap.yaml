@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: barmagly-config
+  namespace: barmagly
+data:
+  NODE_ENV: "production"
+  PORT: "3000"
+  API_VERSION: "v1"
+  REDIS_HOST: "redis-service"
+  REDIS_PORT: "6379"
+  ELASTICSEARCH_NODE: "http://elasticsearch-service:9200"
+  MINIO_ENDPOINT: "minio-service"
+  MINIO_PORT: "9000"
+  MINIO_USE_SSL: "false"
+  LOG_LEVEL: "info"

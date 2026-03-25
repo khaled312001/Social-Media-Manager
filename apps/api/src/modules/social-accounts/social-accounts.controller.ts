@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Param, Query, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Delete, Param, Query, Res, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { Response } from 'express';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -19,8 +19,15 @@ export class SocialAccountsController {
     return this.service.getWorkspaceAccounts(workspaceId);
   }
 
+  @Get('oauth-url')
+  @ApiOperation({ summary: 'Get OAuth URL for platform (JSON, for popup flow)' })
+  getOAuthUrlJson(@Query('platform') platform: Platform, @WorkspaceId() workspaceId: string) {
+    const url = this.service.getOAuthUrl(platform, workspaceId);
+    return { url };
+  }
+
   @Get('connect/:platform')
-  @ApiOperation({ summary: 'Get OAuth URL for platform' })
+  @ApiOperation({ summary: 'Get OAuth URL for platform (redirect)' })
   getOAuthUrl(@Param('platform') platform: Platform, @WorkspaceId() workspaceId: string, @Res() res: Response) {
     const url = this.service.getOAuthUrl(platform, workspaceId);
     return res.redirect(url);
