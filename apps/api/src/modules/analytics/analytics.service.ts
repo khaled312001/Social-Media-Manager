@@ -197,40 +197,29 @@ export class AnalyticsService {
       where: {
         workspaceId,
         status: 'PUBLISHED',
-        analytics: { some: {} },
+        analytics: { isNot: null },
       },
       include: {
-        analytics: {
-          orderBy: { recordedAt: 'desc' },
-          take: 1,
-        },
+        analytics: true,
         media: { take: 1 },
       },
-      orderBy: {
-        analytics: { _count: 'desc' },
-      },
-      take: limit * 3,
+      orderBy: { analytics: { impressions: 'desc' } },
+      take: limit,
     });
 
-    const scored = posts
-      .map((post) => {
-        const a = post.analytics[0];
-        const score = (a?.impressions ?? 0) + (a?.engagements ?? 0) * 5;
-        return { post, a, score };
-      })
-      .sort((x, y) => y.score - x.score)
-      .slice(0, limit);
-
-    return scored.map(({ post, a }) => ({
-      id: post.id,
-      content: post.content,
-      platform: post.platforms as Platform[],
-      impressions: a?.impressions ?? 0,
-      engagements: a?.engagements ?? 0,
-      reach: a?.reach ?? 0,
-      publishedAt: post.publishedAt!,
-      thumbnailUrl: post.media[0]?.url,
-    }));
+    return posts.map((post) => {
+      const a = post.analytics;
+      return {
+        id: post.id,
+        content: post.content,
+        platform: post.platforms as Platform[],
+        impressions: a?.impressions ?? 0,
+        engagements: a?.engagements ?? 0,
+        reach: a?.reach ?? 0,
+        publishedAt: post.publishedAt!,
+        thumbnailUrl: (post.media as any[])[0]?.url,
+      };
+    });
   }
 
   async getEngagementTimeSeries(

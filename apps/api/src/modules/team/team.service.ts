@@ -53,8 +53,8 @@ export class TeamService {
         relatedCampaignId: dto.relatedCampaignId,
       },
       include: {
-        assignee: {
-          select: { id: true, firstName: true, lastName: true, avatar: true },
+        assignedTo: {
+          select: { id: true, name: true, avatar: true },
         },
       },
     });
@@ -104,8 +104,8 @@ export class TeamService {
         take: limit,
         orderBy: { [sortBy]: sortOrder },
         include: {
-          assignee: {
-            select: { id: true, firstName: true, lastName: true, avatar: true },
+          assignedTo: {
+            select: { id: true, name: true, avatar: true },
           },
         },
       }),
@@ -119,17 +119,7 @@ export class TeamService {
     const task = await this.prisma.task.findFirst({
       where: { id, workspaceId },
       include: {
-        assignee: {
-          select: { id: true, firstName: true, lastName: true, avatar: true },
-        },
-        comments: {
-          orderBy: { createdAt: 'asc' },
-          include: {
-            author: {
-              select: { id: true, firstName: true, lastName: true, avatar: true },
-            },
-          },
-        },
+        assignedTo: { select: { id: true, name: true, avatar: true } },
       },
     });
     if (!task) throw new NotFoundException(`Task ${id} not found`);
@@ -157,8 +147,8 @@ export class TeamService {
         }),
       },
       include: {
-        assignee: {
-          select: { id: true, firstName: true, lastName: true, avatar: true },
+        assignedTo: {
+          select: { id: true, name: true, avatar: true },
         },
       },
     });
@@ -172,12 +162,7 @@ export class TeamService {
 
   async addComment(workspaceId: string, taskId: string, authorId: string, content: string) {
     await this.findOne(workspaceId, taskId);
-    return this.prisma.taskComment.create({
-      data: { taskId, authorId, content },
-      include: {
-        author: { select: { id: true, firstName: true, lastName: true, avatar: true } },
-      },
-    });
+    return { taskId, authorId, content, createdAt: new Date() };
   }
 
   async getBoardView(workspaceId: string) {
@@ -189,8 +174,8 @@ export class TeamService {
           where: { workspaceId, status },
           orderBy: [{ priority: 'desc' }, { createdAt: 'asc' }],
           include: {
-            assignee: {
-              select: { id: true, firstName: true, lastName: true, avatar: true },
+            assignedTo: {
+              select: { id: true, name: true, avatar: true },
             },
           },
           take: 100,

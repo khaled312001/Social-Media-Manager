@@ -68,9 +68,7 @@ export class CampaignsService {
       where: { id, workspaceId },
       include: {
         posts: {
-          include: {
-            analytics: { orderBy: { recordedAt: 'desc' }, take: 1 },
-          },
+          include: { analytics: true },
         },
       },
     });

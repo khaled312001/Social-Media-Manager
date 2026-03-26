@@ -67,7 +67,26 @@
       "Bash(\"f:/Social Media:*)",
       "Bash(pnpm install:*)",
       "Bash(npx prisma:*)",
-      "Bash(npx ts-node --project tsconfig.json -e \":*)"
+      "Bash(npx ts-node --project tsconfig.json -e \":*)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(taskkill /F /PID 5716 /PID 4812)",
+      "Bash(Get-Process -Name node)",
+      "Bash(Stop-Process -Force)",
+      "Bash(cmd /c \"taskkill /F /PID 5716 2>&1 && taskkill /F /PID 4812 2>&1\" sleep 2 netstat -ano)",
+      "Bash(cmd /c \"tasklist /FI \"\"PID eq 5716\"\" && tasklist /FI \"\"PID eq 4812\"\"\")",
+      "Bash(cmd /c \"netstat -ano | findstr :3010 | findstr LISTENING\")",
+      "Bash(cmd /c \"netstat -ano | findstr :3020 | findstr LISTENING\")",
+      "Read(//f/Social Media Manager/**)",
+      "Bash(npx tsc:*)",
+      "Bash(find 'f:/Social Media Manager/node_modules/.pnpm/stripe@17.7.0' -name *.d.ts)",
+      "Bash(head -3 node -e \"const s=require\\(''''f:/Social Media Manager/node_modules/.pnpm/stripe@17.7.0/node_modules/stripe''''\\); console.log\\(typeof s\\)\")",
+      "Bash('C:/Program Files/PostgreSQL/16/bin/psql.exe' -U postgres -d barmagly -c '\\\\d post_analytics' 2)",
+      "Bash(/dev/null echo:*)",
+      "Read(//tmp/**)",
+      "Bash(node -e \"require\\(''''f:/Social Media Manager/apps/api/dist/app.controller.js''''\\)\")"
+    ],
+    "additionalDirectories": [
+      "F:\\Social Media Manager\\apps\\api"
     ]
   }
 }

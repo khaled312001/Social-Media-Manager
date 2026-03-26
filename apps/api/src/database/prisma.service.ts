@@ -18,8 +18,8 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
     });
 
     if (config.get('NODE_ENV') === 'development') {
-      // @ts-expect-error - PrismaClient event typing
-      this.$on('query', (e: { query: string; duration: number }) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (this as any).$on('query', (e: { query: string; duration: number }) => {
         if (e.duration > 100) {
           this.logger.warn(`Slow query (${e.duration}ms): ${e.query}`);
         }
